@@ -91,5 +91,5 @@ func DeleteBook(c *gin.Context){
 		return
 	}
 
-	c.JSON(204)
+	c.Status(204)
 }
