@@ -18,7 +18,9 @@ func GetBook(c *gin.Context){
 		})
 		return
 	}
+
 	db := database.GetDatabase()
+
 	var book models.Book
 	err = db.First(&book, newid).Error
 	if err != nil {
@@ -50,4 +52,44 @@ func CreateBook(c *gin.Context){
 		})
 		return
 	}
+	c.JSON(200, book)
+}
+
+func GetAllBooks(c *gin.Context){
+	db := database.GetDatabase()
+
+	var books []models.Book
+
+	err := db.Find(&books).Error
+	if err != nil {
+		c.JSON(400, gin.H{
+			"error": "Cannot get all books: "+ err.Error(),
+		})
+		return
+	}
+	c.JSON(201, books)
+}
+
+func DeleteBook(c *gin.Context){
+	id := c.Param("id")
+
+	newid, err := strconv.Atoi(id)
+	if err != nil {
+		c.JSON(400, gin.H{
+			"error": "ID has to be integer",
+		})
+		return
+	}
+	
+	db := database.GetDatabase()
+
+	err = db.Delete(&models.Book{}, newid).Error
+	if err != nil {
+		c.JSON(400, gin.H{
+			"error": "Cannot delete book",
+		})
+		return
+	}
+
+	c.JSON(204)
 }

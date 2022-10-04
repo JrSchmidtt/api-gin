@@ -10,7 +10,10 @@ func ConfigRoutes(router *gin.Engine) *gin.Engine {
 	{
 		books := main.Group("books")
 		{
+			books.GET("/", controllers.GetAllBooks)
+			books.POST("/", controllers.CreateBook)
 			books.GET("/:id", controllers.GetBook)
+			books.DELETE("/:id", controllers.DeleteBook)
 		}
 	}
 	return router
