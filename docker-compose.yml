@@ -1,0 +1,12 @@
+version: "3.7"
+
+services:
+  db:
+    image: postgres
+    environment:
+      POSTGRES_DB: books
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: 123456
+    container_name: webapi-mvc-db
+    ports:
+      - "25432:5432"
